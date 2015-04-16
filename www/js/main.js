@@ -22,6 +22,11 @@ function initialize() {
         position: currentPosition,
         content: 'Location found using HTML5.'
       });
+      var marker = new google.maps.Marker({
+         map:map,
+         position:currentPosition,
+         title:"Position aquired with navigator.geolocation"
+      });
       centerToGeolocation();
     }, function() {
       handleNoGeolocation(true);
