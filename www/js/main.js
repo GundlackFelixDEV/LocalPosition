@@ -1,38 +1,28 @@
-var directions = {};
-var contactsWithAddress = [];
-var contactAddresses = [];
-var compassWatchId = -1;
-var locationWatchId = -1;
-var map_with_pos = {};
-var previous_pos_marker = {};
-
 var map;
-
-function initialize() {            
-  var mapOptions = {
-    zoom: 12,
+var mapOptions = {
+  zoom: 12,
     disableDefaultUI:true,
     zoomControl:true,
     zoomControlOptions:{
         position:google.maps.ControlPosition.LEFT_BOTTOM
-    }
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+    }  
+};
+var currentPosition = null;
+function initialize() {            
+  map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 
   // Try HTML5 geolocation
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude,
+      currentPosition = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
 
       var infowindow = new google.maps.InfoWindow({
         map: map,
-        position: pos,
+        position: currentPosition,
         content: 'Location found using HTML5.'
       });
-
-      map.setCenter(pos);
+      centerToGeolocation();
     }, function() {
       handleNoGeolocation(true);
     });
@@ -40,8 +30,12 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+  
+  $(".button-reposition").on("click",centerToGeolocation);
 }
-
+function centerToGeolocation(){
+    map.setCenter(currentPosition);
+}
 function handleNoGeolocation(errorFlag) {
   if (errorFlag) {
     var content = 'Error: The Geolocation service failed.';
