@@ -8,9 +8,14 @@ var previous_pos_marker = {};
 
 var map;
 
-function initialize() {
+function initialize() {            
   var mapOptions = {
-    zoom: 6
+    zoom: 12,
+    disableDefaultUI:true,
+    zoomControl:true,
+    zoomControlOptions:{
+        position:google.maps.ControlPosition.LEFT_BOTTOM
+    }
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
