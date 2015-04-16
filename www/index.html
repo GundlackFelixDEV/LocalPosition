@@ -9,25 +9,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css">
-        <style>
-            html, body, #map-canvas {                
-              height: 100%;
-              margin: 0px;
-              padding: 0px;
-            }
-            .content {
-                background:lightgray;
-                display: block;
-                position:absolute;
-                height:auto;
-                top:0;
-                left:0;
-                bottom:0;
-                right:0;
-                padding: 0px;
-                margin-top:50px; /* adjust top margin to your header height */
-            }
-        </style>
+        <link rel="stylesheet" href="css/gmap-bootstrap-controlls.css">
     </head> 
     <body> 
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -52,8 +34,12 @@
           </div>--><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
-        <div class="content container-fluid">
-                 <div id="map-canvas"></div>   
-        </div>
+        <div class="map-fullscreen container-fluid">
+            <div id="map-canvas"></div>
+            <div class="map-controlls align-top align-left">        
+                <div><a><i class="glyphicon glyphicon-map-marker"></i></a></div>
+                <div><a><i class="glyphicon glyphicon-home"></i></a></div>
+            </div>    
+        </div> 
     </body>
 </html>
