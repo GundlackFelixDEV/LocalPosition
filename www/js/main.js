@@ -8,12 +8,8 @@ var mapOptions = {
     }  
 };
 var currentPosition = null;
-function initialize() {            
-  map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
 
-  // Try HTML5 geolocation
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+function centerMap(position){
       currentPosition = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
 
@@ -28,15 +24,34 @@ function initialize() {
          title:"Position aquired with navigator.geolocation"
       });
       centerToGeolocation();
+};
+
+function updateGeolocation()
+{
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position){
+        centerMap(position);
     }, function() {
       handleNoGeolocation(true);
+    },
+    {
+        enableHighAccuracy:true,
+        maximumAge:0,
+        timeout:30000
     });
   } else {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+}
+
+function initialize() {            
+  map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
   
-  $(".button-reposition").on("click",centerToGeolocation);
+  updateGeolocation();
+  
+  $(".button-reposition").on("click",updateGeolocation);
 }
 function centerToGeolocation(){
     map.setCenter(currentPosition);
