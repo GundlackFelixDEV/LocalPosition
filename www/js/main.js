@@ -7,22 +7,29 @@ var mapOptions = {
         position:google.maps.ControlPosition.LEFT_BOTTOM
     }  
 };
+var marker = null;
+var infowindow = null;
 var currentPosition = null;
 
 function centerMap(position){
       currentPosition = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
 
-      var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: currentPosition,
-        content: 'Location found using HTML5.'
-      });
-      var marker = new google.maps.Marker({
-         map:map,
-         position:currentPosition,
-         title:"Position aquired with navigator.geolocation"
-      });
+      if(infowindow === null){
+        infowindow = new google.maps.InfoWindow({
+            map: map,
+            content: 'Location found using HTML5.'
+          });
+      }
+      if(marker === null){
+          marker = new google.maps.Marker({
+            map:map,
+            title:"Position aquired with navigator.geolocation"
+         });
+      }
+      
+      infowindow.setPosition(currentPosition);
+      marker.setPosition(currentPosition);
       centerToGeolocation();
 };
 
